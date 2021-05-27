@@ -5,9 +5,13 @@ let snake = [];
 snake[0] = {x: 8 * box, y: 8 * box}; // tamanho da cobra
 let direcao = 'right'; 
 
-// criando a comida em locais aleatorios .floor ele retira o valor flituaante
+// criando a comida em locais aleatorios 
+//.floor ele retira o valor flutuante
 // o random ele cria numeros aleatorios
-let food = {x: Math.floor(Math.random() * 15 + 1 ), y: Math.floor(Math.random() * 15 + 1 ) } 
+let food = {
+                x: Math.floor(Math.random() * 15 + 1 ) * box,
+                y: Math.floor(Math.random() * 15 + 1 ) * box
+            } 
 
 function criarBG(){ // criando mapa
     context.fillStyle = 'lightgreen'; // altera a cor do retangulo
@@ -20,7 +24,7 @@ function criarCobrinha(){ // criando cobrinha
     }
 }
 function drawFood(){ // criando a comida
-    context.fillStyle = 'red';
+    context.fillStyle = 'black';
     context.fillRect(food.x, food.y, box, box);
 }
 
@@ -40,10 +44,11 @@ function iniciarJogo(){ // iniciar jogo
     if(snake[0].y > 15 * box && direcao == 'down') snake[0].y = 0;
     if(snake[0].y < 0 && direcao == 'up') snake[0].y = 16 * box;
 
+    // inicializa conteudos
     criarBG();
     criarCobrinha();
     drawFood()
-    
+
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
@@ -53,8 +58,15 @@ function iniciarJogo(){ // iniciar jogo
     if(direcao == 'up') snakeY -= box;
     if(direcao == 'down') snakeY += box;
 
+    // colisao com a comida e colocando em novo local aleatorio
+    if(snakeX != food.x || snakeY != food.y){
+        snake.pop();
+    }else{
+        food.x = Math.floor(Math.random() * 15 + 1 ) * box;
+        food.y = Math.floor(Math.random() * 15 + 1 ) * box;
+    }
+
     // coloca a cobrinha pra andar sozinha
-    snake.pop();
     let newHead = {x: snakeX, y: snakeY}
     snake.unshift(newHead);
 }
