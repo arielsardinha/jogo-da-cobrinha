@@ -5,6 +5,10 @@ let snake = [];
 snake[0] = {x: 8 * box, y: 8 * box}; // tamanho da cobra
 let direcao = 'right'; 
 
+// criando a comida em locais aleatorios .floor ele retira o valor flituaante
+// o random ele cria numeros aleatorios
+let food = {x: Math.floor(Math.random() * 15 + 1 ), y: Math.floor(Math.random() * 15 + 1 ) } 
+
 function criarBG(){ // criando mapa
     context.fillStyle = 'lightgreen'; // altera a cor do retangulo
     context.fillRect(0 , 0, 16 * box, 16 * box); //define os lados  x e y / largura e altura
@@ -14,6 +18,10 @@ function criarCobrinha(){ // criando cobrinha
         context.fillStyle = 'red';
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
+}
+function drawFood(){ // criando a comida
+    context.fillStyle = 'red';
+    context.fillRect(food.x, food.y, box, box);
 }
 
 document.addEventListener('keydown', update); // faz evento de click
@@ -34,6 +42,8 @@ function iniciarJogo(){ // iniciar jogo
 
     criarBG();
     criarCobrinha();
+    drawFood()
+    
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
